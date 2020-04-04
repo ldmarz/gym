@@ -3,7 +3,7 @@ import IError from "../entities/IError";
 import IRoutine from "../entities/IRoutine";
 import {IRoutineCreator} from "../http/routes/createRoutinesHandler";
 
-interface IRoutineRepository {
+export interface IRoutineRepository {
     save(routine: IRoutine): Promise<IRoutine | IError>;
 }
 

@@ -4,13 +4,14 @@ import {IHandlers, startHttpServer} from "./http/http";
 import {createRoutinesHandler} from "./http/routes/createRoutinesHandler";
 import {getRoutinesHandler} from "./http/routes/getRoutinesHandler";
 import openMongoConnection from "./initializers/mongodb";
-import * as routineRepository from "./repositories/routinesRepository";
+import {RoutinesRepository} from "./repositories/routinesRepository";
 
 async function main() {
     // TODO: Mover todo esto al paquete initializers
     openMongoConnection();
 
     // TODO: Edward dice que mejorara estos nombres
+    const routineRepository = new RoutinesRepository();
     const routineCreator = new RoutineCreator(routineRepository);
 
     const handlers: IHandlers = {
