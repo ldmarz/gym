@@ -4,7 +4,7 @@ import getRoutineFromContext from "../../adapters/getRoutineFromContext";
 import IError from "../../entities/IError";
 import IRoutine from "../../entities/IRoutine";
 
-interface IRoutineCreator {
+export interface IRoutineCreator {
     create(routine: IRoutine): Promise<IRoutine | IError>;
 }
 

@@ -1,4 +1,5 @@
 import buildCreateFunction from "./createRoutines/createRoutines";
+import RoutineCreator from "./createRoutines/createRoutines";
 import {IHandlers, startHttpServer} from "./http/http";
 import {createRoutinesHandler} from "./http/routes/createRoutinesHandler";
 import {getRoutinesHandler} from "./http/routes/getRoutinesHandler";
@@ -10,9 +11,7 @@ async function main() {
     openMongoConnection();
 
     // TODO: Edward dice que mejorara estos nombres
-    const routineCreator = {
-        create: await buildCreateFunction(routineRepository),
-    };
+    const routineCreator = new RoutineCreator(routineRepository);
 
     const handlers: IHandlers = {
         createRoutines: {method: "POST", path: "/", handler: createRoutinesHandler(routineCreator)},
