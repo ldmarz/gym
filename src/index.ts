@@ -1,10 +1,12 @@
-import buildCreateFunction from "./routineCreator/createRoutines";
-import RoutineCreator from "./routineCreator/createRoutines";
 import {IHandlers, startHttpServer} from "./http/http";
 import {createRoutinesHandler} from "./http/routes/createRoutinesHandler";
 import {getRoutinesHandler} from "./http/routes/getRoutinesHandler";
 import openMongoConnection from "./initializers/mongodb";
 import {RoutinesRepository} from "./repositories/routinesRepository";
+import RoutineCreator from "./routineCreator/RoutineCreator";
+// tslint:disable-next-line:no-var-requires
+require("source-map-support").install();
+
 
 async function main() {
     // TODO: Mover todo esto al paquete initializers

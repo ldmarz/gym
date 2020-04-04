@@ -4,7 +4,7 @@ import {Document, model, Model, Schema} from "mongoose";
 import formatError from "../adapters/formatError";
 import IError from "../entities/IError";
 import IRoutine from "../entities/IRoutine";
-import {IRoutineRepository} from "../routineCreator/createRoutines";
+import {IRoutineRepository} from "../routineCreator/RoutineCreator";
 
 export interface IRoutineMongo extends IRoutine, Document {
     _id: ObjectId;
@@ -24,7 +24,7 @@ function getRoutineRepository(): Model<IRoutineMongo> {
 }
 
 export class RoutinesRepository implements IRoutineRepository {
-   public async save(routine: IRoutine): Promise<IRoutine | IError> {
+   public async save(routine: IRoutine): Promise<IRoutine> {
         try {
             const routineSchema = getRoutineRepository();
             const routineToSave = new routineSchema({
@@ -33,7 +33,7 @@ export class RoutinesRepository implements IRoutineRepository {
 
             return await routineToSave.save();
         } catch (e) {
-            return formatError("Error saving in mongoDB", e);
+            throw new IError("Error saving in mongoDB", e);
         }
     }
 }

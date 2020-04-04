@@ -1,27 +1,19 @@
 import {Context} from "koa";
-import {isError} from "../../adapters/formatError";
 import getRoutineFromContext from "../../adapters/getRoutineFromContext";
-import IError from "../../entities/IError";
 import IRoutine from "../../entities/IRoutine";
 
 export interface IRoutineCreator {
-    create(routine: IRoutine): Promise<IRoutine | IError>;
+    create(routine: IRoutine): Promise<IRoutine>;
 }
 
 export function createRoutinesHandler(routineCreator: IRoutineCreator) {
     return async (ctx: Context, next: () => void): Promise<void>  => {
-        const responseFromContext = getRoutineFromContext(ctx);
-        if (isError(responseFromContext)) {
-            // TODO: Agregar libreria httpCode
-            ctx.throw(responseFromContext.message, 500);
+        try {
+            const responseFromContext = getRoutineFromContext(ctx) as IRoutine;
+            ctx.body = await routineCreator.create(responseFromContext);
+            next();
+        } catch (error) {
+            ctx.throw(error.message, error.code);
         }
-
-        const routineFromCreator = await routineCreator.create(responseFromContext as IRoutine);
-        if (isError(routineFromCreator)) {
-            ctx.throw(routineFromCreator.message, 500);
-        }
-
-        ctx.body = routineFromCreator;
-        next();
     };
 }

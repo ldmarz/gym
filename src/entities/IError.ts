@@ -1,7 +1,9 @@
-export default interface IError {
-    name: string;
-    message: string;
-    // tslint:disable-next-line:ban-types
-    stack?: Object;
-    type: string;
+export default class IError extends Error {
+    public type: string;
+
+    constructor(message: string, stack: string) {
+        super(message);
+        this.stack = stack;
+        this.type = "error";
+    }
 }

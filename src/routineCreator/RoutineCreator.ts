@@ -4,7 +4,7 @@ import IRoutine from "../entities/IRoutine";
 import {IRoutineCreator} from "../http/routes/createRoutinesHandler";
 
 export interface IRoutineRepository {
-    save(routine: IRoutine): Promise<IRoutine | IError>;
+    save(routine: IRoutine): Promise<IRoutine>;
 }
 
 export default class RoutineCreator implements IRoutineCreator {
@@ -14,15 +14,11 @@ export default class RoutineCreator implements IRoutineCreator {
         this.routineRepository = routineRepository;
     }
 
-    public async create(routine: IRoutine): Promise<IRoutine | IError> {
+    public async create(routine: IRoutine): Promise<IRoutine> {
         try {
-            const savedRoutine = await this.routineRepository.save(routine);
-            if (isError(savedRoutine)) {
-                return formatError("Cannot save the routine in repository", savedRoutine as Error);
-            }
-            return savedRoutine;
+            return await this.routineRepository.save(routine);
         } catch (e) {
-            return formatError("Something unexpected saving routine", e);
+            throw new IError("Cannot save the routine in repository", e);
         }
     }
 }
