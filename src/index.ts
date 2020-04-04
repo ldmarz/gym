@@ -1,5 +1,5 @@
-import buildCreateFunction from "./createRoutines/createRoutines";
-import RoutineCreator from "./createRoutines/createRoutines";
+import buildCreateFunction from "./routineCreator/createRoutines";
+import RoutineCreator from "./routineCreator/createRoutines";
 import {IHandlers, startHttpServer} from "./http/http";
 import {createRoutinesHandler} from "./http/routes/createRoutinesHandler";
 import {getRoutinesHandler} from "./http/routes/getRoutinesHandler";

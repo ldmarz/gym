@@ -4,6 +4,7 @@ import {Document, model, Model, Schema} from "mongoose";
 import formatError from "../adapters/formatError";
 import IError from "../entities/IError";
 import IRoutine from "../entities/IRoutine";
+import {IRoutineRepository} from "../routineCreator/createRoutines";
 
 export interface IRoutineMongo extends IRoutine, Document {
     _id: ObjectId;
@@ -22,7 +23,7 @@ function getRoutineRepository(): Model<IRoutineMongo> {
     return model<IRoutineMongo>("routine", schema);
 }
 
-export class RoutinesRepository {
+export class RoutinesRepository implements IRoutineRepository {
    public async save(routine: IRoutine): Promise<IRoutine | IError> {
         try {
             const routineSchema = getRoutineRepository();

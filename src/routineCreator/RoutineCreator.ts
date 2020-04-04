@@ -18,7 +18,7 @@ export default class RoutineCreator implements IRoutineCreator {
         try {
             const savedRoutine = await this.routineRepository.save(routine);
             if (isError(savedRoutine)) {
-                return formatError("Cannot save the routine in repository", savedRoutine);
+                return formatError("Cannot save the routine in repository", savedRoutine as Error);
             }
             return savedRoutine;
         } catch (e) {

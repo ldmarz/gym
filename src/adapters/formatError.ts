@@ -1,6 +1,6 @@
 import IError from "../entities/IError";
 
-export default function formatError(message: string, error: IError): IError {
+export default function formatError(message: string, error: Error): IError {
     console.debug("Some errors occurred => ", error);
 
     return {
